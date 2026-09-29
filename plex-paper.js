@@ -43,8 +43,17 @@
 
 // 제목 앵커(하이브리드): 진짜 링크(아이콘)가 키보드·스크린리더·우클릭 복사의 표준 경로를 담당하고,
 // 제목 아무 곳이나 클릭/탭해도 이동하는 것은 JS 향상이다. 제목 안의 진짜 링크는 그 링크가 우선한다.
+// 아이콘을 누르면 이동과 함께 그 절의 주소를 클립보드에 넣고, 잠깐 체크로 바꿔 복사됐음을 알린다.
+// 클립보드 API가 없거나 거절되면 아이콘은 그대로이고 이동만 한다.
+//
+// CHECK_ICON은 Lucide circle-check다. ISC License, Copyright (c) 2026 Lucide Icons and Contributors.
+// Permission to use, copy, modify, and/or distribute this software for any purpose with or without
+// fee is hereby granted, provided that the above copyright notice and this permission notice appear
+// in all copies. THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES.
 (function () {
     var LINK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5"/></svg>';
+    var CHECK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg>';
+    var COPIED_MILLISECONDS = 1500;
     document.querySelectorAll("h2[id], h3[id]").forEach(function (heading) {
         var anchor = document.createElement("a");
         anchor.className = "anchor-link";
@@ -53,7 +62,28 @@
         anchor.innerHTML = LINK_ICON;
         heading.appendChild(anchor);
     });
+    // 아이콘이 바뀌는 것은 화면에만 보이므로, 스크린리더에는 같은 사실을 status 영역으로 읽어 준다
+    var status = document.createElement("span");
+    status.className = "anchor-status";
+    status.setAttribute("role", "status");
+    document.body.appendChild(status);
+    function showCopied(anchor) {
+        anchor.innerHTML = CHECK_ICON;
+        anchor.classList.add("copied");
+        status.textContent = "링크 복사됨";
+        clearTimeout(anchor.copiedTimer);
+        anchor.copiedTimer = setTimeout(function () {
+            anchor.innerHTML = LINK_ICON;
+            anchor.classList.remove("copied");
+            status.textContent = "";
+        }, COPIED_MILLISECONDS);
+    }
     document.addEventListener("click", function (event) {
+        var anchor = event.target.closest(".anchor-link");
+        if (anchor && navigator.clipboard) {
+            var url = location.origin + location.pathname + anchor.hash;
+            navigator.clipboard.writeText(url).then(function () { showCopied(anchor); }, function () {});
+        }
         var heading = event.target.closest("h2[id], h3[id]");
         if (!heading || event.target.closest("a")) return;
         location.hash = heading.id;

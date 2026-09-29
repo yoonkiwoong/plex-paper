@@ -208,6 +208,12 @@ h2[id], h3[id] { cursor: pointer; }
 /* 방문 색을 물려받지 않는다 — 도구이지 콘텐츠 링크가 아니다. */
 .anchor-link:visited { color: var(--muted); }
 .anchor-link:hover, .anchor-link:visited:hover { color: var(--link); }
+/* 복사됨: 성공 상태라 의미 색 Success. 호버 색보다 이겨야 해서 같은 조합을 모두 적는다.
+   아이콘이 안 보이는 기기에서 눌러도 잠깐 드러나 복사를 알린다. */
+.anchor-link.copied, .anchor-link.copied:visited,
+.anchor-link.copied:hover, .anchor-link.copied:visited:hover { color: var(--ok); opacity: 1; }
+/* 화면에는 없고 스크린리더만 읽는 복사 알림 */
+.anchor-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* 타일 그리드: dl(라벨-값 쌍의 표준 요소)로 매핑.
    dt→dd 순서는 HTML 규칙이라 값을 위에 보이려면 column-reverse로 뒤집는다. */
