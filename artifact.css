@@ -1,0 +1,82 @@
+/* Plex Paper 아티팩트 층 — plex-paper.css 뒤에 싣는다. DESIGN.md '아티팩트에서 다른 것'.
+   뷰어의 수동 토글(data-theme)이 시스템 설정을 이긴다. */
+
+:root[data-theme="dark"] {
+    --bg: #000000;
+    --text: #FFFFFF;
+    --link: #0A84FF;
+    --link-visited: #BF5AF2;
+    --border: #38383A;
+    --quote-bg: #1C1C1E;
+    --quote-border: #3A3A3C;
+    --code-bg: #1C1C1E;
+    --code-border: #3A3A3C;
+    --ok: #30D158;
+    --warn: #FF9F0A;
+    --fail: #FF453A;
+    --info: #0A84FF;
+    --tok-kw: #BF5AF2;
+    --tok-str: #FF453A;
+    --tok-num: #0A84FF;
+    --cat-orange: #D47B00;
+    --cat-purple: #B372D4;
+    --cat-green: #35AC52;
+    --cat-teal: #279CB8;
+    --cat-pink: #EB5774;
+    --cat-amber: #B08C00;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root[data-theme="light"] {
+        --bg: #FFFFFF;
+        --text: #000000;
+        --link: #007AFF;
+        --link-visited: #AF52DE;
+        --border: #C6C6C8;
+        --quote-bg: #F2F2F7;
+        --quote-border: #D1D1D6;
+        --code-bg: #F2F2F7;
+        --code-border: #D1D1D6;
+        --ok: #34C759;
+        --warn: #FF9500;
+        --fail: #FF3B30;
+        --info: #007AFF;
+        --tok-kw: #AF52DE;
+        --tok-str: #FF3B30;
+        --tok-num: #007AFF;
+        --cat-orange: #E68600;
+        --cat-purple: #C27CE6;
+        --cat-green: #44CB66;
+        --cat-teal: #4DBBCF;
+        --cat-pink: #FF5F7E;
+        --cat-amber: #D9AD00;
+    }
+}
+
+/* 플로팅 목차(아티팩트 한정): 본문 오른쪽 여백에 상시 노출. 본문 폭 700px + 양쪽 목차 폭이
+   확보되는 화면에서만 보이고, 좁으면 사라진다 — 그때는 목차 없이 스크롤한다(본문 상단 목차는 이중 목차라 뺐다). */
+.toc {
+    display: none;
+    position: fixed;
+    top: 90px;
+    left: calc(50% + 372px);
+    width: 210px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    font-size: 0.85em;
+    line-height: 1.5;
+}
+@media (min-width: 1200px) {
+    .toc { display: block; }
+}
+.toc a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 2px 0 2px 10px;
+    border-left: 2px solid var(--border);
+}
+.toc a.toc-h3 { padding-left: 24px; }
+.toc a:visited { color: var(--muted); }
+.toc a:hover { color: var(--link); }
+.toc a.active { color: var(--text); border-left-color: var(--link); }

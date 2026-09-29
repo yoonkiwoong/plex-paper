@@ -1,0 +1,303 @@
+/* Plex Paper — 블로그, 아티팩트, 위키가 함께 쓰는 공통 층. 규칙은 DESIGN.md가 원본이다.
+   매체마다 더하는 것은 이 파일에 섞지 않는다 — 아티팩트는 artifact.css, 폰트 파일은 fonts/. */
+
+:root {
+    color-scheme: light dark;
+    --bg: #FFFFFF;
+    --text: #000000;
+    --muted: #8E8E93;
+    --link: #007AFF;
+    --link-visited: #AF52DE;
+    --border: #C6C6C8;
+    --quote-bg: #F2F2F7;
+    --quote-border: #D1D1D6;
+    --code-bg: #F2F2F7;
+    --code-border: #D1D1D6;
+    --ok: #34C759;
+    --warn: #FF9500;
+    --fail: #FF3B30;
+    --info: #007AFF;
+    /* 소프트 톤 7 (Color Cycle 절 참조). Blue는 공용, 나머지는 다크 블록에서 재정의. */
+    --cat-blue: #2689FF;
+    --cat-orange: #E68600;
+    --cat-purple: #C27CE6;
+    --cat-green: #44CB66;
+    --cat-teal: #4DBBCF;
+    --cat-pink: #FF5F7E;
+    --cat-amber: #D9AD00;
+    --tok-kw: #AF52DE;
+    --tok-str: #FF3B30;
+    --tok-num: #007AFF;
+    --tok-comment: #8E8E93;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #000000;
+        --text: #FFFFFF;
+        --link: #0A84FF;
+        --link-visited: #BF5AF2;
+        --border: #38383A;
+        --quote-bg: #1C1C1E;
+        --quote-border: #3A3A3C;
+        --code-bg: #1C1C1E;
+        --code-border: #3A3A3C;
+        --ok: #30D158;
+        --warn: #FF9F0A;
+        --fail: #FF453A;
+        --info: #0A84FF;
+        --tok-kw: #BF5AF2;
+        --tok-str: #FF453A;
+        --tok-num: #0A84FF;
+        --cat-orange: #D47B00;
+        --cat-purple: #B372D4;
+        --cat-green: #35AC52;
+        --cat-teal: #279CB8;
+        --cat-pink: #EB5774;
+        --cat-amber: #B08C00;
+    }
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', 'IBM Plex Sans KR', -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+    /* 한글은 음절마다 끊지 않는다. break-word는 띄어쓰기 없이 긴 것이 폭을 넘을 때만 끊는 짝. */
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+h1 { text-wrap: balance; }
+h2 { text-wrap: balance; margin-top: 2.5em; border-bottom: 1px solid var(--border); padding-bottom: 0.3em; }
+h3 { text-wrap: balance; margin-top: 2em; }
+
+hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
+
+.muted { color: var(--muted); }
+small { color: var(--muted); }
+.doc-meta { color: var(--muted); margin-top: -0.5em; }
+
+ol { list-style-type: decimal; }
+ol ol { list-style-type: lower-alpha; }
+ol ol ol { list-style-type: lower-roman; }
+ul { list-style-type: disc; }
+ul ul { list-style-type: circle; }
+ul ul ul { list-style-type: square; }
+ul, ol { padding-inline-start: 40px; margin-block: 1em; }
+ul ul, ul ol, ol ul, ol ol { padding-inline-start: 16px; margin-block: 0; }
+
+a { color: var(--link); }
+a:visited { color: var(--link-visited); }
+a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+blockquote {
+    background-color: var(--quote-bg);
+    border-left: 4px solid var(--quote-border);
+    margin: 15px 0;
+    padding: 12px;
+}
+blockquote p { margin: 0; }
+
+code {
+    background-color: var(--code-bg);
+    padding: 2px 4px;
+    font-family: 'IBM Plex Mono', 'IBM Plex Sans KR', monospace;
+    font-size: 0.9em;
+}
+
+pre {
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    margin: 15px 0;
+    padding: 12px;
+    overflow-x: auto;
+}
+pre code { background-color: transparent; padding: 0; }
+
+.tok-kw { color: var(--tok-kw); }
+.tok-str { color: var(--tok-str); }
+.tok-num { color: var(--tok-num); }
+.tok-comment { color: var(--tok-comment); }
+
+/* 라벨이 코드 첫 줄과 겹치지 않도록 상단 여백으로 자리를 확보한다. */
+pre[data-lang] { position: relative; padding-top: 30px; }
+pre[data-lang]::before {
+    content: attr(data-lang);
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75em;
+    color: var(--muted);
+}
+
+.table-scroll { overflow-x: auto; }
+table {
+    border-collapse: collapse;
+    margin: 15px 0;
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+}
+th, td {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: left;
+    vertical-align: top;
+}
+th { background-color: var(--quote-bg); }
+/* 병합 셀은 가운데 정렬 — 걸친 열들의 한쪽에 붙어 있으면 그 열의 값처럼 오독된다. */
+td[colspan] { text-align: center; }
+
+.chip {
+    display: inline-block;
+    font-size: 0.85em;
+    font-weight: 700;
+    padding: 1px 8px;
+    border: 1px solid currentColor;
+    border-radius: 999px;
+    white-space: nowrap;
+    /* 좁은 화면에서 칩이 여러 줄로 감길 때 위아래가 붙지 않게 */
+    margin-block: 2px;
+}
+.chip.ok { color: var(--ok); }
+.chip.warn { color: var(--warn); }
+.chip.fail { color: var(--fail); }
+.chip.info { color: var(--info); }
+.chip.tag { color: var(--muted); border-color: var(--border); font-weight: 400; }
+
+.callout {
+    background-color: var(--quote-bg);
+    border-left: 4px solid var(--quote-border);
+    margin: 15px 0;
+    padding: 12px;
+}
+.callout.ok { border-left-color: var(--ok); }
+.callout.warn { border-left-color: var(--warn); }
+.callout.fail { border-left-color: var(--fail); }
+.callout.info { border-left-color: var(--info); }
+.callout p { margin: 0.3em 0 0; }
+.callout strong:first-child { display: block; }
+
+/* 완료 항목: GFM 취소선(~~)의 del 매핑. 색까지 물려서 시각적으로도 한 층 물러난다. */
+del { color: var(--muted); }
+
+/* 제목 앵커(하이브리드): 표준 경로는 진짜 링크(아이콘)가, 큰 클릭 목표는 제목 자체가 담당.
+   제목 텍스트를 링크로 감싸지 않는 이유 — 사파리 리더 모드가 제목을 링크로 렌더링해
+   지저분해진다. 별도 아이콘은 리더 모드에서 걷혀 제목이 깨끗하게 남는다. */
+h2[id], h3[id] { cursor: pointer; }
+.anchor-link {
+    margin-left: 8px;
+    color: var(--muted);
+    text-decoration: none;
+    vertical-align: middle;
+    /* 항상 DOM에 두고 opacity로만 나타난다 — 넣었다 빼면 줄 높이가 변해 밑줄이 흔들린다. */
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+.anchor-link svg { width: 16px; height: 16px; }
+.anchor-link:focus-visible { opacity: 1; }
+/* 호버 노출은 호버가 있는 기기에만 건다 — 터치 기기에 :hover 노출 규칙이 있으면
+   iOS(WebKit)가 첫 탭을 호버로 소비해서 두 번 탭해야 클릭이 된다. */
+@media (hover: hover) {
+    h2:hover .anchor-link, h3:hover .anchor-link { opacity: 1; }
+}
+/* 방문 색을 물려받지 않는다 — 도구이지 콘텐츠 링크가 아니다. */
+.anchor-link:visited { color: var(--muted); }
+.anchor-link:hover, .anchor-link:visited:hover { color: var(--link); }
+
+/* 타일 그리드: dl(라벨-값 쌍의 표준 요소)로 매핑.
+   dt→dd 순서는 HTML 규칙이라 값을 위에 보이려면 column-reverse로 뒤집는다. */
+.stat-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin: 15px 0; }
+.stat-tiles > div {
+    background: var(--quote-bg);
+    border: 1px solid var(--quote-border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.stat-tiles dd { margin: 0; font-size: 1.6em; font-weight: 700; font-variant-numeric: tabular-nums; }
+.stat-tiles dt { color: var(--muted); font-size: 0.9em; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 15px 0; }
+.cards article { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.cards .card-title { font-weight: 700; margin: 0; }
+.cards p { margin: 6px 0 0; font-size: 0.95em; }
+
+/* 진행 바: 네이티브 위젯 껍데기를 벗기고 시스템 토큰으로 다시 칠한다.
+   벤더 의사요소는 표준이 아니지만 전 브라우저가 지원 — progress라는
+   표준 요소를 유지하면서 모양을 통제하는 유일한 길이다.
+   appearance는 접두사 없는 표준 표기만 쓴다(2022년부터 전 브라우저 지원). */
+progress {
+    width: 100%;
+    height: 12px;
+    appearance: none;
+    border: none;
+    background-color: var(--quote-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    vertical-align: middle;
+}
+progress::-webkit-progress-bar { background-color: var(--quote-bg); border-radius: 4px; }
+progress::-webkit-progress-value { background-color: var(--cat-blue); border-radius: 4px; }
+progress::-moz-progress-bar { background-color: var(--cat-blue); border-radius: 4px; }
+
+/* 바 + 숫자를 flex 한 줄로 묶는다 — 좁은 화면에서 숫자가 감기지 않고 바가 대신 줄어든다. */
+.progress-line { display: flex; align-items: center; gap: 10px; }
+.progress-line progress { flex: 1; min-width: 0; }
+.progress-line span { white-space: nowrap; }
+
+/* 차트: 한 행이 "라벨 + 막대 + 숫자". dl 매핑(dt 라벨, dd 막대, dd 값)이고,
+   라벨 길이가 제각각이어도 막대 시작점이 맞도록 grid로 열을 정렬한다.
+   표를 쓰지 않는 이유 — 격자선은 막대 길이 비교를 방해하는 노이즈다. */
+.chart {
+    display: grid;
+    grid-template-columns: max-content 1fr max-content;
+    gap: 8px 12px;
+    align-items: center;
+    margin: 15px 0;
+}
+.chart dt, .chart dd { margin: 0; }
+.chart > *:nth-child(3n) { text-align: right; font-variant-numeric: tabular-nums; }
+.chart progress { height: 16px; }
+/* 시리즈별 채움: Color Cycle의 배정 순서. 기본(s1 생략 시)은 Blue. */
+.s2::-webkit-progress-value { background-color: var(--cat-orange); }
+.s2::-moz-progress-bar { background-color: var(--cat-orange); }
+.s3::-webkit-progress-value { background-color: var(--cat-purple); }
+.s3::-moz-progress-bar { background-color: var(--cat-purple); }
+.s4::-webkit-progress-value { background-color: var(--cat-green); }
+.s4::-moz-progress-bar { background-color: var(--cat-green); }
+.s5::-webkit-progress-value { background-color: var(--cat-teal); }
+.s5::-moz-progress-bar { background-color: var(--cat-teal); }
+.s6::-webkit-progress-value { background-color: var(--cat-pink); }
+.s6::-moz-progress-bar { background-color: var(--cat-pink); }
+.s7::-webkit-progress-value { background-color: var(--cat-amber); }
+.s7::-moz-progress-bar { background-color: var(--cat-amber); }
+
+details {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    margin: 15px 0;
+}
+details summary { cursor: pointer; font-weight: 700; }
+details[open] summary { margin-bottom: 8px; }
+
+kbd {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85em;
+    background-color: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 1px 5px;
+}
+
+/* mark: systemYellow 원색 고정(두 테마 공용) + 검정 글자.
+   형광펜의 강조는 색상이 아니라 명도로 전달되어 색각 이상에도 보인다. */
+mark { background-color: #FFCC00; color: #000000; padding: 0 2px; }
+
+.footnote { color: var(--muted); font-size: 0.9em; }
