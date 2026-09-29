@@ -199,7 +199,7 @@ h2[id], h3[id] { cursor: pointer; }
     transition: opacity 0.15s;
 }
 .anchor-link svg { width: 16px; height: 16px; }
-.anchor-link:focus-visible { opacity: 1; }
+.anchor-link:focus-visible, .anchor-link.shown { opacity: 1; }
 /* 호버 노출은 호버가 있는 기기에만 건다 — 터치 기기에 :hover 노출 규칙이 있으면
    iOS(WebKit)가 첫 탭을 호버로 소비해서 두 번 탭해야 클릭이 된다. */
 @media (hover: hover) {

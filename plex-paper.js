@@ -45,6 +45,9 @@
 // 제목 아무 곳이나 클릭/탭해도 이동하는 것은 JS 향상이다. 제목 안의 진짜 링크는 그 링크가 우선한다.
 // 아이콘을 누르면 이동과 함께 그 절의 주소를 클립보드에 넣고, 잠깐 체크로 바꿔 복사됐음을 알린다.
 // 클립보드 API가 없거나 거절되면 아이콘은 그대로이고 이동만 한다.
+// 제목을 누르면 그 제목의 아이콘을 계속 보이게 둔다 — 호버가 없는 터치 기기에서도 두 번째 탭으로
+// 복사할 수 있게 하려는 것이다. 호버 규칙이 아니라 누른 제목에 붙이는 표시라서 첫 탭이 호버로
+// 먹히는 문제가 다시 생기지 않는다.
 //
 // CHECK_ICON은 Lucide circle-check다. ISC License, Copyright (c) 2026 Lucide Icons and Contributors.
 // Permission to use, copy, modify, and/or distribute this software for any purpose with or without
@@ -87,5 +90,9 @@
         var heading = event.target.closest("h2[id], h3[id]");
         if (!heading || event.target.closest("a")) return;
         location.hash = heading.id;
+        document.querySelectorAll(".anchor-link.shown").forEach(function (shown) {
+            shown.classList.remove("shown");
+        });
+        heading.querySelector(".anchor-link").classList.add("shown");
     });
 })();
