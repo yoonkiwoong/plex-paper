@@ -77,9 +77,7 @@ h3 { text-wrap: balance; margin-top: 2em; }
 
 hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
 
-.muted { color: var(--muted); }
 small { color: var(--muted); }
-.doc-meta { color: var(--muted); margin-top: -0.5em; }
 
 ol { list-style-type: decimal; }
 ol ol { list-style-type: lower-alpha; }
@@ -135,7 +133,6 @@ pre[data-lang]::before {
     color: var(--muted);
 }
 
-.table-scroll { overflow-x: auto; }
 table {
     border-collapse: collapse;
     margin: 15px 0;
@@ -169,12 +166,7 @@ td[colspan] { text-align: center; }
 .chip.info { color: var(--info); }
 .chip.tag { color: var(--muted); border-color: var(--border); font-weight: 400; }
 
-.callout {
-    background-color: var(--quote-bg);
-    border-left: 4px solid var(--quote-border);
-    margin: 15px 0;
-    padding: 12px;
-}
+/* 콜아웃은 blockquote의 변형이라 상자는 blockquote 규칙이 그리고, 여기서는 선 색만 바꾼다. */
 .callout.ok { border-left-color: var(--ok); }
 .callout.warn { border-left-color: var(--warn); }
 .callout.fail { border-left-color: var(--fail); }
@@ -201,20 +193,17 @@ h2[id], h3[id] { cursor: pointer; }
 .anchor-link svg { width: 16px; height: 16px; }
 .anchor-link:focus-visible, .anchor-link.shown { opacity: 1; }
 /* 호버 노출은 호버가 있는 기기에만 건다 — 터치 기기에 :hover 노출 규칙이 있으면
-   iOS(WebKit)가 첫 탭을 호버로 소비해서 두 번 탭해야 클릭이 된다. */
+   iOS(WebKit)가 첫 탭을 호버로 소비해서 두 번 탭해야 클릭이 된다.
+   호버 파랑도 같은 이유로 여기에만 둔다 — 터치 기기는 탭한 뒤에도 :hover를 붙잡아 아이콘이 파랗게 남는다. */
 @media (hover: hover) {
     h2:hover .anchor-link, h3:hover .anchor-link { opacity: 1; }
+    .anchor-link:hover, .anchor-link:visited:hover { color: var(--link); }
 }
 /* 방문 색을 물려받지 않는다 — 도구이지 콘텐츠 링크가 아니다. */
 .anchor-link:visited { color: var(--muted); }
-/* 호버 파랑은 마우스가 있는 기기에만 — 터치 기기는 탭한 뒤에도 :hover를 붙잡아 아이콘이 파랗게 남는다 */
-@media (hover: hover) {
-    .anchor-link:hover, .anchor-link:visited:hover { color: var(--link); }
-}
 /* 복사됨: 모양만 체크로 바뀌고 색은 아이콘 그대로 둔다. 호버 색보다 이겨야 해서 같은 조합을 모두 적는다. */
 .anchor-link.copied, .anchor-link.copied:visited,
 .anchor-link.copied:hover, .anchor-link.copied:visited:hover { color: var(--muted); opacity: 1; }
-/* 화면에는 없고 스크린리더만 읽는 복사 알림 */
 .anchor-status { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* 타일 그리드: dl(라벨-값 쌍의 표준 요소)로 매핑.
