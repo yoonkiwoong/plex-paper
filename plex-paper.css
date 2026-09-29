@@ -133,6 +133,9 @@ pre[data-lang]::before {
     color: var(--muted);
 }
 
+/* 본문 700px은 최대 폭이라 좁은 화면에서는 본문이 줄고, 칸이 많은 표는 그보다 넓어진다.
+   표를 감싸 그 안에서만 가로로 밀리게 한다 — 페이지 전체가 옆으로 밀리지 않게. */
+.table-scroll { overflow-x: auto; }
 table {
     border-collapse: collapse;
     margin: 15px 0;
