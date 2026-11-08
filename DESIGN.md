@@ -2,7 +2,7 @@
 
 이 시스템의 이름은 Plex Paper — 본문 서체인 IBM Plex와, 종이 문서처럼 보인다는 기준에서 왔다. IBM Plex 서체에서 딴 비공식 이름이다.
 
-블로그, Claude Code 아티팩트, 위키가 함께 쓰는 시각 규칙. 셋 모두에 걸리는 것은 매체 절 앞에 두고, 매체마다 달라지는 것은 매체 절에 둔다. 구현도 같은 경계를 따른다 — 이 저장소의 `plex-paper.css`·`plex-paper.js`가 공통 층이고, 매체가 더하는 것은 따로 둔다(아티팩트는 `artifact.css`·`artifact.js`). 기준은 하나다 — 마크다운으로 렌더링한 문서처럼 보인다. 장식은 그 자체가 정보일 때만 허용하고, 브라우저 기본값을 오버라이드할 때는 근거를 남긴다.
+블로그, Claude Code 아티팩트, 위키가 함께 쓰는 시각 규칙. 셋 모두에 걸리는 것은 매체 절 앞에 두고, 매체마다 달라지는 것은 매체 절에 둔다. 구현도 같은 경계를 따른다 — 이 저장소의 `plex-paper.css`·`plex-paper.js`가 공통 층이고, 매체가 더하는 것은 따로 둔다(아티팩트는 `artifact.css`·`artifact.js`, 위키는 `wiki.css`). 기준은 하나다 — 마크다운으로 렌더링한 문서처럼 보인다. 장식은 그 자체가 정보일 때만 허용하고, 브라우저 기본값을 오버라이드할 때는 근거를 남긴다.
 
 ## 기조
 
@@ -83,7 +83,7 @@
 
 - Text 글: List 리스트 · Checklist 체크리스트 · Code 코드 · Blockquote 인용문 · Callout 콜아웃 · Muted 보조 텍스트 · Footnote 각주 · Label 라벨 · Highlight 형광펜 · Divider 구분선
 - Information 정보: Table 표 · Chip 칩 · Tile Grid 타일 그리드 · Card Grid 카드 그리드 · Progress Bar 진행 바 · Chart 차트 · Timeline 타임라인 · Diagram 다이어그램 · Image 이미지
-- Navigation 탐색: Details 접기 · Floating TOC 상시 목차 · Heading Anchor 제목 앵커
+- Navigation 탐색: Details 접기 · Floating TOC 상시 목차 · Sidebar 사이드바 · Heading Anchor 제목 앵커
 
 묶음 밖: Colors 색 (Base 바탕 / Grays 회색 / Primaries 원색 / Color Cycle 순환색) — 모든 요소가 쓰는 바탕이다.
 
@@ -131,7 +131,13 @@ JS는 띠를 만들고, 현재 장을 따라가고, 키와 휠로 넘기는 것�
 
 ### 위키에서 다른 것
 
-아직 만들지 않았다. 정해진 방향은 하나다 — 위키 전체의 페이지 목록을 본문 옆에 둔다. 목록은 빌드할 때 폴더 구조에서 정적 HTML로 만든다. 레이아웃 1의 본문 700px 가운데 정렬을 깨는 결정이라, 목록의 자리와 좁은 화면에서의 강등, 본문 목차를 함께 둘지는 만들 때 근거와 함께 여기 적는다.
+위키 페이지는 3열이다. 본문은 레이아웃 1 그대로 700px 가운데에 두고, 왼쪽 여백에 위키 전체 페이지 목록인 Sidebar를, 오른쪽 여백에 그 페이지의 Floating TOC를 둔다. 왼쪽에 사이트 전체, 오른쪽에 이 페이지를 두는 배치는 문서 사이트 대부분이 써서 설명 없이 읽힌다. 위키 층은 `wiki.css`다.
+
+1. Sidebar는 빌드할 때 폴더 구조에서 정적 HTML로 만든다. 마크업은 nav 안의 details이고, 그 안에 summary와 중첩 ul을 둔다. 페이지는 링크, 폴더는 링크가 아닌 이름(span)이고, 지금 보는 페이지의 링크에 `aria-current="page"`를 건다. JS가 없다.
+2. 모양은 Floating TOC와 같다. 글자는 보조 텍스트, 왼쪽 선은 경계선, 지금 보는 페이지는 본문 글자색에 링크 파랑 선이다. 새 색이 없다. 단계는 글자의 왼쪽 여백으로만 나타내고 선은 한 줄로 잇는다. 폴더는 3단까지 — 리스트(문서 요소 8)와 같은 기준이다.
+3. 두 열은 본문 바깥 22px에서 210px씩이라, 세 열이 다 들어가는 폭은 1164px이다. 기준은 Floating TOC와 같은 1200px로 두어 두 열이 함께 나타나고 함께 빠진다.
+4. 1200px 아래에서는 목차가 사라지고 Sidebar는 본문 아래로 내려간다. 목차는 스크롤로 대신할 수 있지만, Sidebar가 없으면 다른 페이지로 갈 길이 본문 링크뿐이다. 위로 올리지 않는 이유는 페이지가 늘수록 매번 목록을 지나야 본문이 나오기 때문이다.
+5. 본문 아래의 Sidebar는 닫힌 Details(접기)로 둔다. 넓은 화면에서는 제목 줄(summary)을 숨기고 닫힌 채로도 목록을 펼쳐 보인다. 닫힌 details를 CSS만으로 펼치는 `::details-content`를 지원하지 않는 브라우저에서는 넓은 화면에서도 닫힌 Details로 남되, 제목 줄을 눌러 펼칠 수 있다. 폭만으로 정하므로 JS가 필요 없다.
 
 ### GitHub에서 다른 것
 
