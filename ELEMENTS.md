@@ -242,10 +242,10 @@ def can_retry(elapsed_seconds):
 
 흐름·상태 전환은 mermaid 코드 펜스로 그린다. 마크다운 원문에 텍스트로 남고, 지원하지 않는 뷰어에서는 원문이 보이는 우아한 강등.
 
-<!-- 블로그용 SVG: diagrams/1441ec58a7a4-light.svg, diagrams/1441ec58a7a4-dark.svg. 이름은 펜스 본문(앞뒤 공백 제거)의 sha256 앞 12자리라, 본문을 고치면 SVG를 다시 만들어야 블로그가 그림을 쓴다 — 없으면 원문 코드로 강등된다. 다시 만드는 법: 본문을 d.mmd로 저장하고 npx @mermaid-js/mermaid-cli@11 -i d.mmd -c diagrams/mermaid.json -b transparent -t neutral -o diagrams/1441ec58a7a4-light.svg, 같은 명령에 -t dark -o diagrams/1441ec58a7a4-dark.svg. -->
+<!-- 블로그용 SVG: diagrams/0ef3c507090e-light.svg, diagrams/0ef3c507090e-dark.svg. 이름은 펜스 본문(앞뒤 공백 제거)의 sha256 앞 12자리라, 본문을 고치면 SVG를 다시 만들어야 블로그가 그림을 쓴다 — 없으면 원문 코드로 강등된다. 다시 만드는 법: 본문을 d.mmd로 저장하고 npx @mermaid-js/mermaid-cli@11 -i d.mmd -c diagrams/mermaid.json -b transparent -t neutral -o diagrams/0ef3c507090e-light.svg, 같은 명령에 -t dark -o diagrams/0ef3c507090e-dark.svg. -->
 ```mermaid
 flowchart LR
-    A["초안"] --> B["검토 중"] --> C["승인 대기"] --> D["게시"]
+    A("초안") --> B("검토 중") --> C("승인 대기") --> D("게시")
 ```
 
 1. mermaid 펜스 채택 — 코어 표준은 아니지만 GitHub·GitLab·Notion·Obsidian이 지원하는 사실상 표준
