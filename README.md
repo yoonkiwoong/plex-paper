@@ -25,6 +25,7 @@ Most elements are plain HTML. Chips, callouts, tiles, cards, and charts use a fe
 - `DESIGN.md` — the rules, in Korean
 - `ELEMENTS.md` — every element with its decision history, in Korean
 - `artifact.css`, `artifact.js` — extra layer for Claude artifacts: manual theme toggle and a floating table of contents
+- `wiki.css` — extra layer for the wiki: the list of every wiki page beside the body
 - `diagrams/` — diagrams from `ELEMENTS.md`, rendered to SVG for the blog
 
 ## License

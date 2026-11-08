@@ -305,6 +305,33 @@ flowchart LR
 2. JS가 h2·h3에서 생성(강등: 목차 없음, 본문은 온전) — 현재 절 강조는 IntersectionObserver(표준 API)
 3. 본문 상단의 링크 목차는 제거 — 이중 목차가 미관을 해침. 좁은 화면·JS 없음에서는 목차 없이 스크롤
 
+### Sidebar
+
+위키 전체 페이지 목록. 넓은 화면에서는 본문 왼쪽에 Floating TOC와 좌우 대칭으로 서고, 좁은 화면에서는 본문 아래에 닫힌 Details로 내려간다. 지금 보는 페이지가 강조된다. 모양은 Floating TOC와 같아서 새 색이 없다. 위키에만 있어서 이 문서에는 실물이 없다.
+
+```html
+<nav class="sidebar" aria-label="위키 페이지">
+  <details>
+    <summary>위키 페이지</summary>
+    <ul>
+      <li><a href="/">처음</a></li>
+      <li><span>검수</span>
+        <ul>
+          <li><a href="/qa/login/">로그인</a></li>
+          <li><a href="/qa/payment/" aria-current="page">결제 상태 전환</a></li>
+        </ul>
+      </li>
+    </ul>
+  </details>
+</nav>
+```
+
+1. 위키 한정으로 채택 — 빌드할 때 폴더 구조에서 정적 HTML로 만들어 JS가 없다. 페이지는 링크, 폴더는 이름(span), 지금 보는 페이지는 `aria-current="page"`
+2. 화면 폭 1200px 이상에서 본문 왼쪽에 고정 — Floating TOC와 같은 기준이라 두 열이 함께 나타나고 함께 빠진다
+3. 좁은 화면에서는 본문 아래로 — 위에 두면 페이지가 늘수록 매번 목록을 지나야 본문이 나온다. 접기 버튼은 두지 않음
+4. 폴더는 3단까지 — List와 같은 기준
+5. 본문 아래에서는 닫힌 Details로 접음 — 3번의 "접기 버튼은 두지 않음"을 바꿈. 넓은 화면에서는 제목 줄을 숨기고 `::details-content`로 펼쳐 보인다. 이를 지원하지 않는 브라우저는 넓은 화면에서도 닫힌 Details로 남지만 눌러서 펼칠 수 있다
+
 ### Heading Anchor
 
 이 문서의 h2·h3가 실물이다. 제목에 마우스를 올리면 아이콘(진짜 링크)이 나타나고, 제목 아무 곳이나 클릭/탭해도 그 절로 이동한다.
