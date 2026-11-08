@@ -76,7 +76,13 @@
 
 요소 이름은 문서에서 영어로 쓴다. 한글 대응은 여기에만 둔다 — 별도 대비 표를 문서마다 두면 사본이 늘어 원본과 어긋난다.
 
-Table 표 · Chip 칩 · List 리스트 · Checklist 체크리스트 · Code 코드 · Blockquote 인용문 · Callout 콜아웃 · Muted 보조 텍스트 · Footnote 각주 · Tile Grid 타일 그리드 · Card Grid 카드 그리드 · Progress Bar 진행 바 · Chart 차트 · Colors 색 (Base 바탕 / Grays 회색 / Primaries 원색 / Color Cycle 순환색) · Diagram 다이어그램 · Details 접기 · Label 라벨 · Highlight 형광펜 · Divider 구분선 · Floating TOC 상시 목차 · Heading Anchor 제목 앵커
+요소는 하는 일에 따라 세 묶음으로 나눈다.
+
+- Text 글: List 리스트 · Checklist 체크리스트 · Code 코드 · Blockquote 인용문 · Callout 콜아웃 · Muted 보조 텍스트 · Footnote 각주 · Label 라벨 · Highlight 형광펜 · Divider 구분선
+- Information 정보: Table 표 · Chip 칩 · Tile Grid 타일 그리드 · Card Grid 카드 그리드 · Progress Bar 진행 바 · Chart 차트 · Diagram 다이어그램
+- Navigation 탐색: Details 접기 · Floating TOC 상시 목차 · Heading Anchor 제목 앵커
+
+묶음 밖: Colors 색 (Base 바탕 / Grays 회색 / Primaries 원색 / Color Cycle 순환색) — 모든 요소가 쓰는 바탕이다.
 
 Briefing에서만 쓰는 이름은 아래에 따로 둔다. 기본 층에는 없는 것이라 블로그, 위키, GitHub에서는 쓸 자리가 없다.
 
