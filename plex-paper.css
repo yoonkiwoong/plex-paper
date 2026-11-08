@@ -137,19 +137,31 @@ pre[data-lang]::before {
 /* 본문 700px은 최대 폭이라 좁은 화면에서는 본문이 줄고, 칸이 많은 표는 그보다 넓어진다.
    표를 감싸 그 안에서만 가로로 밀리게 한다 — 페이지 전체가 옆으로 밀리지 않게. */
 .table-scroll { overflow-x: auto; }
+/* 바깥 모서리 5px. collapse는 border-radius를 무시해서 separate로 두고,
+   바깥 선은 표가, 안쪽 선은 셀의 오른쪽·아래가 긋는다 — 셀마다 사방을 그으면 선이 두 겹이 된다.
+   함정: rowspan이 오른쪽 끝이나 마지막 행에 걸리면 :last-child 판정이 어긋나 선이 빠지거나 겹친다(마크다운 표에는 rowspan이 없다). */
 table {
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--border);
+    border-radius: 5px;
     margin: 15px 0;
     width: 100%;
     font-variant-numeric: tabular-nums;
 }
 th, td {
-    border: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
     padding: 8px 12px;
     text-align: left;
     vertical-align: top;
 }
+tr > :last-child { border-right: 0; }
+table > :last-child > tr:last-child > * { border-bottom: 0; }
 th { background-color: var(--quote-bg); }
+/* 헤더 배경이 표의 둥근 모서리 밖으로 비어져 나오지 않게 — 5px에서 바깥 선 1px을 뺀 값. */
+thead > tr:first-child > :first-child { border-top-left-radius: 4px; }
+thead > tr:first-child > :last-child { border-top-right-radius: 4px; }
 /* 병합 셀은 가운데 정렬 — 걸친 열들의 한쪽에 붙어 있으면 그 열의 값처럼 오독된다. */
 td[colspan] { text-align: center; }
 
@@ -214,7 +226,7 @@ h2[id], h3[id] { cursor: pointer; }
 .stat-tiles > div {
     background: var(--quote-bg);
     border: 1px solid var(--quote-border);
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 14px 16px;
     display: flex;
     flex-direction: column-reverse;
@@ -223,7 +235,7 @@ h2[id], h3[id] { cursor: pointer; }
 .stat-tiles dt { color: var(--muted); font-size: 0.9em; }
 
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin: 15px 0; }
-.cards article { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+.cards article { border: 1px solid var(--border); border-radius: 5px; padding: 14px 16px; }
 .cards .card-title { font-weight: 700; margin: 0; }
 .cards p { margin: 6px 0 0; font-size: 0.95em; }
 
@@ -237,13 +249,13 @@ progress {
     appearance: none;
     border: none;
     background-color: var(--quote-bg);
-    border-radius: 4px;
+    border-radius: 5px;
     overflow: hidden;
     vertical-align: middle;
 }
-progress::-webkit-progress-bar { background-color: var(--quote-bg); border-radius: 4px; }
-progress::-webkit-progress-value { background-color: var(--cat-blue); border-radius: 4px; }
-progress::-moz-progress-bar { background-color: var(--cat-blue); border-radius: 4px; }
+progress::-webkit-progress-bar { background-color: var(--quote-bg); border-radius: 5px; }
+progress::-webkit-progress-value { background-color: var(--cat-blue); border-radius: 5px; }
+progress::-moz-progress-bar { background-color: var(--cat-blue); border-radius: 5px; }
 
 /* 바 + 숫자를 flex 한 줄로 묶는다 — 좁은 화면에서 숫자가 감기지 않고 바가 대신 줄어든다. */
 .progress-line { display: flex; align-items: center; gap: 10px; }
@@ -291,7 +303,7 @@ kbd {
     background-color: var(--code-bg);
     border: 1px solid var(--code-border);
     border-bottom-width: 2px;
-    border-radius: 4px;
+    border-radius: 5px;
     padding: 1px 5px;
 }
 
