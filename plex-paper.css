@@ -295,6 +295,27 @@ progress::-moz-progress-bar { background-color: var(--cat-blue); border-radius: 
 .s7::-webkit-progress-value { background-color: var(--cat-amber); }
 .s7::-moz-progress-bar { background-color: var(--cat-amber); }
 
+/* 타임라인: ol + time. 항목 수만큼 본문 폭을 똑같이 나누고 칸 왼쪽 끝에 점을 찍는다 — 칸 수를 적지 않아도 grid가 나눈다.
+   선은 첫 점에서 마지막 점까지만 긋는다(양 끝 닫힘). 진행 중이라는 뜻은 선이 아니라 글(2023.08–현재)이 진다. */
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+}
+.timeline li { position: relative; min-width: 0; padding: 20px 10px 0 0; font-size: 0.85em; line-height: 1.5; }
+.timeline li::before { content: ""; position: absolute; top: 5px; left: 0; right: 0; border-top: 1px solid var(--border); }
+.timeline li:last-child::before { display: none; }
+.timeline li::after { content: ""; position: absolute; top: 0; left: 0; width: 11px; height: 11px; border-radius: 50%; background-color: var(--cat-blue); }
+.timeline time { display: block; font-weight: 700; font-variant-numeric: tabular-nums; }
+/* 좁은 화면에서는 두 칸씩 접는다. 줄 끝 칸의 선을 지워야 다음 줄 첫 점으로 선이 넘어가 보이지 않는다. */
+@media (max-width: 600px) {
+    .timeline { grid-auto-flow: row; grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 14px; }
+    .timeline li:nth-child(even)::before { display: none; }
+}
+
 details {
     border: 1px solid var(--border);
     padding: 8px 12px;
