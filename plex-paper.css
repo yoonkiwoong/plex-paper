@@ -78,6 +78,12 @@ h3 { text-wrap: balance; margin-top: 2em; }
 
 hr { border: 0; border-top: 1px solid var(--border); margin: 2em 0; }
 
+/* 본문 폭을 넘는 이미지가 좁은 화면에서 페이지를 옆으로 밀지 않게 줄이고, 비율은 지킨다. */
+img { max-width: 100%; height: auto; }
+/* 문단 속 사진은 높이 480px까지 — 세로 사진이 한 화면을 다 차지하지 않게. 줄어든 만큼 가운데로 모여 좌우 여백이 생긴다.
+   p 안으로 한정한다: 블로그의 다이어그램(picture 안의 img)까지 줄이면 넓은 흐름도의 글자가 작아진다. */
+p > img { display: block; max-height: 480px; width: auto; margin: 0.5em auto; border-radius: 5px; }
+
 small { color: var(--muted); }
 
 ol { list-style-type: decimal; }
